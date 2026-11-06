@@ -1,0 +1,6 @@
+{
+  "name": "Señor Sancho Blanco: The Interactive Books & Companion Reader",
+  "description": "An interactive literary reader and comparative study of Señor Sancho Blanco's Guide to Being the Perfect Other Guy and The Legend and the Lesson.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
