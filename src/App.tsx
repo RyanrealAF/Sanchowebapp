@@ -3,106 +3,51 @@ import { TopNav, ActiveTab } from './components/TopNav';
 import { BookShelf } from './components/BookShelf';
 import { BookReader } from './components/BookReader';
 import { ComparativeReader } from './components/ComparativeReader';
-import { BlancoCodeCodex } from './components/BlancoCodeCodex';
-import { FantasyAccounting } from './components/FantasyAccounting';
-import { ProtocolFieldTest } from './components/ProtocolFieldTest';
-import { PathologyDossier } from './components/PathologyDossier';
 import { ReaderSettingsModal, ReaderTheme } from './components/ReaderSettingsModal';
 import { BOOKS_INFO, BOOK_1_CHAPTERS, BOOK_2_CHAPTERS, BookChapter } from './utils/bookData';
 import { soundscapes } from './utils/ambientAudio';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('shelf');
-  const [book1ChapterId, setBook1ChapterId] = useState<string>('b1-ch1');
-  const [book2ChapterId, setBook2ChapterId] = useState<string>('b2-ch1');
+  const [book1ChapterId, setBook1ChapterId] = useState('b1-prologue');
+  const [book2ChapterId, setBook2ChapterId] = useState('b2-prologue');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [ambientPlaying, setAmbientPlaying] = useState(false);
 
-  // Reader Settings State with safe LocalStorage fallbacks
   const [theme, setTheme] = useState<ReaderTheme>(() => {
-    try {
-      return (localStorage.getItem('sancho_theme') as ReaderTheme) || 'amber';
-    } catch {
-      return 'amber';
-    }
+    try { return (localStorage.getItem('sancho_theme') as ReaderTheme) || 'amber'; }
+    catch { return 'amber'; }
   });
-
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg' | 'xl'>(() => {
-    try {
-      return (localStorage.getItem('sancho_fontsize') as 'sm' | 'md' | 'lg' | 'xl') || 'md';
-    } catch {
-      return 'md';
-    }
+    try { return (localStorage.getItem('sancho_fontsize') as 'sm' | 'md' | 'lg' | 'xl') || 'md'; }
+    catch { return 'md'; }
   });
-
   const [fontFamily, setFontFamily] = useState<'serif' | 'sans'>(() => {
-    try {
-      return (localStorage.getItem('sancho_fontfamily') as 'serif' | 'sans') || 'serif';
-    } catch {
-      return 'serif';
-    }
+    try { return (localStorage.getItem('sancho_fontfamily') as 'serif' | 'sans') || 'serif'; }
+    catch { return 'serif'; }
   });
-
   const [bookmarks, setBookmarks] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('sancho_bookmarks');
-      return saved ? JSON.parse(saved) : ['b1-ch1', 'b2-ch1'];
-    } catch {
-      return ['b1-ch1', 'b2-ch1'];
-    }
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem('sancho_theme', theme);
-    } catch {
-      // Storage unavailable or restricted in sandboxed iframe
-    }
+    try { localStorage.setItem('sancho_theme', theme); } catch {}
   }, [theme]);
-
   useEffect(() => {
-    try {
-      localStorage.setItem('sancho_fontsize', fontSize);
-    } catch {
-      // Storage unavailable or restricted in sandboxed iframe
-    }
+    try { localStorage.setItem('sancho_fontsize', fontSize); } catch {}
   }, [fontSize]);
-
   useEffect(() => {
-    try {
-      localStorage.setItem('sancho_fontfamily', fontFamily);
-    } catch {
-      // Storage unavailable or restricted in sandboxed iframe
-    }
+    try { localStorage.setItem('sancho_fontfamily', fontFamily); } catch {}
   }, [fontFamily]);
-
   useEffect(() => {
-    try {
-      localStorage.setItem('sancho_bookmarks', JSON.stringify(bookmarks));
-    } catch {
-      // Storage unavailable or restricted in sandboxed iframe
-    }
+    try { localStorage.setItem('sancho_bookmarks', JSON.stringify(bookmarks)); } catch {}
   }, [bookmarks]);
 
-  // Handle ambient audio toggle
-  const handleToggleAmbient = () => {
-    const nextState = !ambientPlaying;
-    setAmbientPlaying(nextState);
-    soundscapes.toggleAmbient(nextState);
-  };
+  const allChapters: BookChapter[] = [...BOOK_1_CHAPTERS, ...BOOK_2_CHAPTERS];
 
-  // Toggle bookmark
-  const handleToggleBookmark = (chapterId: string) => {
-    setBookmarks(prev =>
-      prev.includes(chapterId) ? prev.filter(id => id !== chapterId) : [...prev, chapterId]
-    );
-  };
-
-  const handleRemoveBookmark = (chapterId: string) => {
-    setBookmarks(prev => prev.filter(id => id !== chapterId));
-  };
-
-  // Navigation handlers
   const handleSelectBook = (bookId: 'book1' | 'book2', chapterId?: string) => {
     if (bookId === 'book1') {
       if (chapterId) setBook1ChapterId(chapterId);
@@ -111,21 +56,30 @@ export default function App() {
       if (chapterId) setBook2ChapterId(chapterId);
       setActiveTab('book2');
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const allChapters: BookChapter[] = [...BOOK_1_CHAPTERS, ...BOOK_2_CHAPTERS];
+  const handleToggleBookmark = (chapterId: string) => {
+    setBookmarks(current => current.includes(chapterId)
+      ? current.filter(id => id !== chapterId)
+      : [...current, chapterId]);
+  };
 
-  // Theme styling wrapper
+  const handleToggleAmbient = () => {
+    const next = !ambientPlaying;
+    setAmbientPlaying(next);
+    soundscapes.toggleAmbient(next);
+  };
+
   const themeClasses = {
-    amber: 'bg-[#FAF7F2] text-[#292524] dark:bg-[#1C1614] dark:text-[#F5F2EB]',
-    paper: 'bg-[#FDFBF7] text-[#1C1917] dark:bg-[#1A1817] dark:text-[#EDE8E1]',
-    midnight: 'bg-[#F8FAFC] text-[#0F172A] dark:bg-[#0B1120] dark:text-[#F1F5F9]',
-    gallery: 'bg-[#FFFFFF] text-[#0A0A0A] dark:bg-[#121212] dark:text-[#F4F4F5]',
+    amber: 'bg-[#FAF7F2] text-[#292524] dark:bg-[#171513] dark:text-[#F5F0E8]',
+    paper: 'bg-[#FDFBF7] text-[#1C1917] dark:bg-[#191614] dark:text-[#EDE8E1]',
+    midnight: 'bg-[#F8FAFC] text-[#0F172A] dark:bg-[#10131B] dark:text-[#F1F5F9]',
+    gallery: 'bg-[#FFFFFF] text-[#0A0A0A] dark:bg-[#151313] dark:text-[#F4F4F5]',
   }[theme];
 
   return (
-    <div className={`min-h-screen transition-colors duration-200 flex flex-col ${themeClasses}`}>
-      {/* Universal Top Navigation conforming to Top Bar Contract */}
+    <div className={`dark min-h-screen flex flex-col transition-colors duration-200 ${themeClasses}`}>
       <TopNav
         activeTab={activeTab}
         onTabChange={tab => {
@@ -138,13 +92,11 @@ export default function App() {
         onToggleAmbient={handleToggleAmbient}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1">
+      <main className="flex-1">
         {activeTab === 'shelf' && (
           <BookShelf
             onSelectBook={handleSelectBook}
             onOpenComparative={() => setActiveTab('comparative')}
-            onOpenCompanion={tab => setActiveTab(tab)}
             savedBookmarksCount={bookmarks.length}
           />
         )}
@@ -155,16 +107,8 @@ export default function App() {
             chapters={BOOK_1_CHAPTERS}
             allChapters={allChapters}
             currentChapterId={book1ChapterId}
-            onSelectChapter={id => setBook1ChapterId(id)}
-            onNavigateToLinkedChapter={(bookId, chapterId) => {
-              if (bookId === 'book2') {
-                setBook2ChapterId(chapterId);
-                setActiveTab('book2');
-              } else {
-                setBook1ChapterId(chapterId);
-                setActiveTab('book1');
-              }
-            }}
+            onSelectChapter={setBook1ChapterId}
+            onNavigateToLinkedChapter={(bookId, chapterId) => handleSelectBook(bookId, chapterId)}
             bookmarks={bookmarks}
             onToggleBookmark={handleToggleBookmark}
             fontSize={fontSize}
@@ -179,16 +123,8 @@ export default function App() {
             chapters={BOOK_2_CHAPTERS}
             allChapters={allChapters}
             currentChapterId={book2ChapterId}
-            onSelectChapter={id => setBook2ChapterId(id)}
-            onNavigateToLinkedChapter={(bookId, chapterId) => {
-              if (bookId === 'book1') {
-                setBook1ChapterId(chapterId);
-                setActiveTab('book1');
-              } else {
-                setBook2ChapterId(chapterId);
-                setActiveTab('book2');
-              }
-            }}
+            onSelectChapter={setBook2ChapterId}
+            onNavigateToLinkedChapter={(bookId, chapterId) => handleSelectBook(bookId, chapterId)}
             bookmarks={bookmarks}
             onToggleBookmark={handleToggleBookmark}
             fontSize={fontSize}
@@ -204,24 +140,8 @@ export default function App() {
             fontFamily={fontFamily}
           />
         )}
+      </main>
 
-        {activeTab === 'code' && (
-          <BlancoCodeCodex
-            onJumpToNovellaChapter={chId => {
-              setBook2ChapterId(chId);
-              setActiveTab('book2');
-            }}
-          />
-        )}
-
-        {activeTab === 'accounting' && <FantasyAccounting />}
-
-        {activeTab === 'dossier' && <PathologyDossier />}
-
-        {activeTab === 'test' && <ProtocolFieldTest />}
-      </div>
-
-      {/* Reader Settings Modal */}
       <ReaderSettingsModal
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
@@ -237,16 +157,15 @@ export default function App() {
           handleSelectBook(bookId, chapterId);
           setSettingsOpen(false);
         }}
-        onRemoveBookmark={handleRemoveBookmark}
+        onRemoveBookmark={id => setBookmarks(current => current.filter(item => item !== id))}
       />
 
-      {/* Elegant Editorial Footer */}
-      <footer className="mt-16 border-t border-stone-200 dark:border-stone-800 py-10 px-4 sm:px-6 text-center text-xs sm:text-sm text-stone-500 space-y-2.5">
-        <p className="font-display italic text-base sm:text-lg text-stone-700 dark:text-stone-300">
-          “The king has the throne. The queen has the vote. And you, caballero, have a reservation.”
+      <footer className="mt-16 border-t border-[#5B4937]/50 bg-[#171311] px-4 py-10 text-center space-y-3">
+        <p className="font-display italic text-xl sm:text-2xl text-[#D7B77E]">
+          “The King has the throne. The Queen has the vote. And you, caballero, have a reservation.”
         </p>
-        <p className="font-sans text-xs sm:text-sm text-stone-400 dark:text-stone-500">
-          The Señor Sancho Blanco Project · Satirical Manual & Narrative Novella · Curated Edition
+        <p className="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-stone-500">
+          The Señor Sancho Blanco Project · A Guide to Being the Perfect Other Guy
         </p>
       </footer>
     </div>
