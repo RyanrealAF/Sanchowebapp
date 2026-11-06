@@ -10,7 +10,7 @@ import { soundscapes } from './utils/ambientAudio';
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('shelf');
   const [book1ChapterId, setBook1ChapterId] = useState('b1-prologue');
-  const [book2ChapterId, setBook2ChapterId] = useState('b2-prologue');
+  const [book2ChapterId, setBook2ChapterId] = useState('b2-ch1');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [ambientPlaying, setAmbientPlaying] = useState(false);
 
