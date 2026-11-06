@@ -1,328 +1,156 @@
 import React from 'react';
-import { BookOpen, Sparkles, Scale, Compass, ArrowRight, Bookmark } from 'lucide-react';
+import { ArrowRight, Bookmark, BookOpen, Columns3, Feather, Sparkles } from 'lucide-react';
 import { BOOKS_INFO } from '../utils/bookData';
-import { ActiveTab } from './TopNav';
-import { soundscapes } from '../utils/ambientAudio';
 
 interface BookShelfProps {
   onSelectBook: (bookId: 'book1' | 'book2', chapterId?: string) => void;
   onOpenComparative: () => void;
-  onOpenCompanion: (tab: ActiveTab) => void;
   savedBookmarksCount: number;
 }
 
 export const BookShelf: React.FC<BookShelfProps> = ({
-  onSelectBook,
-  onOpenComparative,
-  onOpenCompanion,
-  savedBookmarksCount,
+  onSelectBook, onOpenComparative, savedBookmarksCount,
 }) => {
-  const book1 = BOOKS_INFO.book1;
-  const book2 = BOOKS_INFO.book2;
+  const manual = BOOKS_INFO.book1;
+  const novella = BOOKS_INFO.book2;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16">
-      {/* Editorial Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-sans">
-          <span>The Señor Sancho Blanco Project</span>
-          <span aria-hidden="true">·</span>
-          <span>Dual Interactive Volumes</span>
-          <span aria-hidden="true">·</span>
-          <span>Curated Edition</span>
-        </div>
-
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-medium text-stone-900 dark:text-stone-100 tracking-tight leading-tight">
-          Two Interactive Books. <br />
-          <span className="italic font-normal text-amber-900 dark:text-amber-300">
-            One Questionable Decision.
-          </span>
-        </h1>
-
-        <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 font-reading-serif leading-relaxed">
-          Explore the razor-sharp satirical manual of high protocol, spatial containment, and boutique transience alongside the complete narrative case study that tested its laws against real-life Atlanta friction.
-        </p>
-
-        {savedBookmarksCount > 0 && (
-          <div className="pt-2 text-xs text-stone-500 flex items-center justify-center gap-1.5">
-            <Bookmark className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-            <span>{savedBookmarksCount} saved bookmark{savedBookmarksCount > 1 ? 's' : ''} across your library</span>
+    <div className="relative isolate overflow-hidden bg-[#171311] text-[#F1E7D8]">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_0%,rgba(143,91,48,0.24),transparent_55%),linear-gradient(180deg,#211914_0%,#171311_55%,#171311_100%)]" />
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 sm:pt-20">
+        <section className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+          <div className="space-y-7">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#987449]/50 bg-[#33251D]/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#D6B77F]">
+              <Sparkles className="h-3.5 w-3.5" /> The private edition
+            </div>
+            <div className="space-y-4">
+              <p className="font-sans text-xs uppercase tracking-[0.28em] text-[#B58D5B]">An education in romantic discretion</p>
+              <h1 className="max-w-3xl font-display text-5xl font-medium leading-[0.98] tracking-tight text-[#F3E8D7] sm:text-6xl lg:text-7xl">
+                Welcome,<br /><span className="italic text-[#D2AD72]">caballero.</span>
+              </h1>
+              <p className="max-w-xl font-reading-serif text-lg leading-relaxed text-[#C9BBA8] sm:text-xl">
+                You've entered Sancho's establishment. A little charm. A little intelligence. A great deal of self-control.
+              </p>
+              <p className="max-w-xl text-sm leading-7 text-[#A99A88]">
+                Explore the Blanco Code through three connected experiences: a satirical manual, a fictional story, and an interactive reader that puts the lessons beside the moments that prove them.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button onClick={() => onSelectBook('book1', 'b1-prologue')}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#B9935D] px-6 py-3 text-sm font-bold text-[#211810] shadow-lg shadow-black/20 transition hover:bg-[#D2B47D]">
+                Enter the experience <ArrowRight className="h-4 w-4" />
+              </button>
+              <button onClick={onOpenComparative}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#796247] px-6 py-3 text-sm font-semibold text-[#E1D2BC] transition hover:border-[#C7A36B] hover:bg-white/5">
+                <Columns3 className="h-4 w-4" /> See how it connects
+              </button>
+            </div>
+            {savedBookmarksCount > 0 && (
+              <p className="flex items-center gap-2 text-xs text-[#A99579]">
+                <Bookmark className="h-3.5 w-3.5" /> {savedBookmarksCount} saved reading bookmark{savedBookmarksCount === 1 ? '' : 's'}
+              </p>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* The Two Books Showcase */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-        {/* Book 1: The Satirical Manual */}
-        <div className="group rounded-2xl bg-white dark:bg-stone-900/90 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="w-40 sm:w-48 shrink-0 rounded-xl overflow-hidden shadow-lg border border-stone-200/60 dark:border-stone-700 aspect-[3/4] bg-stone-100 mx-auto sm:mx-0">
-                <img
-                  src={book1.coverImage}
-                  alt={book1.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-
-              <div className="space-y-2.5 flex-1">
-                <div className="text-xs sm:text-sm uppercase tracking-widest text-amber-800 dark:text-amber-400 font-sans font-semibold">
-                  Volume I · The Behavioral Framework
+          <div className="relative mx-auto w-full max-w-xl">
+            <div className="absolute -inset-5 rounded-[2rem] border border-[#987449]/20" />
+            <div className="relative grid grid-cols-[0.9fr_1fr] items-center gap-3 sm:gap-5">
+              <div className="rotate-[-5deg] overflow-hidden rounded-xl border border-[#A27C4D]/50 bg-[#30231B] shadow-2xl shadow-black/50">
+                <img src={manual.coverImage} alt={manual.title} className="aspect-[3/4] w-full object-cover" />
+                <div className="border-t border-[#80613F]/40 px-3 py-3">
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-[#C7A36B]">Volume I</p>
+                  <p className="mt-1 font-display text-lg text-[#F0E0C8]">The Manual</p>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-display font-semibold text-stone-900 dark:text-stone-100 leading-snug">
-                  {book1.title}
-                </h2>
-                <p className="text-sm sm:text-base text-stone-500 dark:text-stone-400 italic">
-                  {book1.subtitle}
-                </p>
-
-                <div className="pt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-stone-500 dark:text-stone-400">
-                  <span>23 Chapters + Files</span>
-                  <span aria-hidden="true">·</span>
-                  <span>7 Blanco Laws</span>
-                  <span aria-hidden="true">·</span>
-                  <span>~38k words</span>
+              </div>
+              <div className="translate-y-8 rotate-[4deg] overflow-hidden rounded-xl border border-[#A27C4D]/50 bg-[#30231B] shadow-2xl shadow-black/50">
+                <img src={novella.coverImage} alt={novella.title} className="aspect-[3/4] w-full object-cover" />
+                <div className="border-t border-[#80613F]/40 px-3 py-3">
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-[#C7A36B]">Volume II</p>
+                  <p className="mt-1 font-display text-lg text-[#F0E0C8]">The Novella</p>
                 </div>
               </div>
             </div>
-
-            <p className="text-base sm:text-lg text-stone-700 dark:text-stone-300 font-reading-serif leading-relaxed">
-              {book1.description} Features complete chapters with Sancho’s Laws, the didactic Lectures, the La Paloma Case Studies, and the unsparing Reality Checks where the unspent punchline extracts its toll.
-            </p>
-
-            <div className="bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/50 rounded-xl p-4 text-sm sm:text-base text-amber-950 dark:text-amber-200 space-y-1.5">
-              <span className="font-semibold block font-sans text-xs sm:text-sm uppercase tracking-wider text-amber-900 dark:text-amber-300">Core Tenet:</span>
-              <span className="italic font-reading-serif block leading-relaxed">
-                “The king has the throne. The queen has the vote. And you, caballero, have a reservation. A visit is not a residence.”
-              </span>
+            <div className="absolute -bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-[#987449]/40 bg-[#241B16] px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[#D2B47D] shadow-xl">
+              <Feather className="h-3.5 w-3.5" /> Two volumes · one questionable education
             </div>
           </div>
+        </section>
 
-          <div className="pt-6 mt-6 border-t border-stone-200/70 dark:border-stone-800 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-            <button
-              onClick={() => {
-                soundscapes.playPageTurn();
-                onSelectBook('book1', 'b1-ch1');
-              }}
-              className="px-6 py-3 rounded-xl bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-950 text-base font-medium hover:bg-stone-800 dark:hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[48px]"
-            >
-              <BookOpen className="w-5 h-5" />
-              <span>Read Manual (Ch. 1)</span>
-            </button>
-
-            <button
-              onClick={() => {
-                soundscapes.playPageTurn();
-                onSelectBook('book1', 'b1-prologue');
-              }}
-              className="text-sm text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors flex items-center justify-center gap-1.5 font-medium min-h-[44px]"
-            >
-              <span>Prologue: Unqualified Instructor</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+        <section className="mt-28 space-y-7">
+          <div className="flex flex-col justify-between gap-3 border-b border-[#6B533A]/50 pb-5 sm:flex-row sm:items-end">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#B58D5B]">Choose your education</p>
+              <h2 className="mt-2 font-display text-3xl text-[#F0E4D2] sm:text-4xl">Three doors. One questionable education.</h2>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-[#A99A88]">Start with the principles, follow the story, or put them side by side.</p>
           </div>
-        </div>
 
-        {/* Book 2: The Narrative Novella */}
-        <div className="group rounded-2xl bg-white dark:bg-stone-900/90 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="w-40 sm:w-48 shrink-0 rounded-xl overflow-hidden shadow-lg border border-stone-200/60 dark:border-stone-700 aspect-[3/4] bg-stone-100 mx-auto sm:mx-0">
-                <img
-                  src={book2.coverImage}
-                  alt={book2.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
+          <div className="grid gap-5 lg:grid-cols-3">
+            <article className="group flex flex-col overflow-hidden rounded-xl border border-[#604A35] bg-[#211A16] transition duration-300 hover:-translate-y-1 hover:border-[#B9935D]/80">
+              <div className="relative aspect-[16/9] overflow-hidden bg-[#30231B]">
+                <img src={manual.coverImage} alt="" className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+                <span className="absolute left-4 top-4 rounded-full border border-[#D0AC72]/50 bg-[#1A1410]/85 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Volume I</span>
               </div>
-
-              <div className="space-y-2.5 flex-1">
-                <div className="text-xs sm:text-sm uppercase tracking-widest text-sky-800 dark:text-sky-400 font-sans font-semibold">
-                  Volume II · The Empirical Case Study
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-display font-semibold text-stone-900 dark:text-stone-100 leading-snug">
-                  {book2.title}
-                </h2>
-                <p className="text-sm sm:text-base text-stone-500 dark:text-stone-400 italic">
-                  {book2.subtitle}
-                </p>
-
-                <div className="pt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-stone-500 dark:text-stone-400">
-                  <span>10 Chapters + Series Bible</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Foreword by Tasha Green</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Novella Draft</span>
-                </div>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The behavioral guide</p>
+                <h3 className="mt-2 font-display text-2xl text-[#F0E4D2]">The Manual</h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-[#BDAF9D]">Twenty-three chapters of the Blanco Code: discretion, boundaries, emotional discipline, and the art of being a welcome guest.</p>
+                <button onClick={() => onSelectBook('book1', 'b1-prologue')} className="mt-6 flex min-h-11 items-center justify-between border-t border-[#604A35] pt-4 text-sm font-semibold text-[#D7B77E] transition hover:text-[#F0D6A7]">
+                  Explore the Manual <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </button>
               </div>
-            </div>
+            </article>
 
-            <p className="text-base sm:text-lg text-stone-700 dark:text-stone-300 font-reading-serif leading-relaxed">
-              {book2.description} From the 40-mph botanical gale where Sancho holds Daniel’s tent poles in the rain, to the group chat ambush and the kitchen confrontation with Daniel’s label maker and single brass key.
-            </p>
+            <article className="group flex flex-col overflow-hidden rounded-xl border border-[#604A35] bg-[#211A16] transition duration-300 hover:-translate-y-1 hover:border-[#B9935D]/80">
+              <div className="relative aspect-[16/9] overflow-hidden bg-[#30231B]">
+                <img src={novella.coverImage} alt="" className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+                <span className="absolute left-4 top-4 rounded-full border border-[#D0AC72]/50 bg-[#1A1410]/85 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Volume II</span>
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The narrative case study</p>
+                <h3 className="mt-2 font-display text-2xl text-[#F0E4D2]">The Novella</h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-[#BDAF9D]">Ten chapters of fictionalized Atlanta relationship warfare. Meet Daniel Mercer, Elena Mercer, and Rico Royale, then watch the principles collide with real consequences.</p>
+                <button onClick={() => onSelectBook('book2', 'b2-prologue')} className="mt-6 flex min-h-11 items-center justify-between border-t border-[#604A35] pt-4 text-sm font-semibold text-[#D7B77E] transition hover:text-[#F0D6A7]">
+                  Enter the story <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </button>
+              </div>
+            </article>
 
-            <div className="bg-sky-50/70 dark:bg-sky-950/30 border border-sky-200/60 dark:border-sky-900/50 rounded-xl p-4 text-sm sm:text-base text-sky-950 dark:text-sky-200 space-y-1.5">
-              <span className="font-semibold block font-sans text-xs sm:text-sm uppercase tracking-wider text-sky-900 dark:text-sky-300">Tasha Green’s Opening Verdict:</span>
-              <span className="italic font-reading-serif block leading-relaxed">
-                “Keeping things uncomplicated isn’t a noble philosophy. It’s simply the cheapest way to stay charming and free.”
-              </span>
-            </div>
+            <article className="group flex flex-col overflow-hidden rounded-xl border border-[#80613F]/70 bg-[linear-gradient(145deg,#30241C,#211A16_65%)] transition duration-300 hover:-translate-y-1 hover:border-[#D0AC72]">
+              <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden border-b border-[#604A35] bg-[radial-gradient(circle_at_center,rgba(185,147,93,0.2),transparent_65%),#211A16]">
+                <div className="grid w-4/5 grid-cols-2 gap-2">
+                  <div className="rounded-lg border border-[#A88452]/60 bg-[#3B2B20] p-4 shadow-xl">
+                    <p className="text-[9px] uppercase tracking-[0.18em] text-[#D7B77E]">Theory</p>
+                    <div className="mt-4 h-1 w-4/5 rounded bg-[#C4A16C]/70" />
+                    <div className="mt-2 h-1 w-full rounded bg-[#C4A16C]/30" />
+                    <div className="mt-2 h-1 w-3/5 rounded bg-[#C4A16C]/30" />
+                  </div>
+                  <div className="mt-5 rounded-lg border border-[#A88452]/60 bg-[#292C29] p-4 shadow-xl">
+                    <p className="text-[9px] uppercase tracking-[0.18em] text-[#B6C2AE]">Reality</p>
+                    <div className="mt-4 h-1 w-4/5 rounded bg-[#B6C2AE]/70" />
+                    <div className="mt-2 h-1 w-full rounded bg-[#B6C2AE]/30" />
+                    <div className="mt-2 h-1 w-3/5 rounded bg-[#B6C2AE]/30" />
+                  </div>
+                </div>
+                <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-[#A88452]/50 bg-[#1A1410]/90 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Interactive feature</span>
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The connection</p>
+                <h3 className="mt-2 font-display text-2xl text-[#F0E4D2]">Comparative Reader</h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-[#BDAF9D]">Put the Manual's principles beside the Novella's scenes. Compare the lesson with the moment it is tested: theory on one side, reality on the other.</p>
+                <button onClick={onOpenComparative} className="mt-6 flex min-h-11 items-center justify-between border-t border-[#604A35] pt-4 text-sm font-semibold text-[#D7B77E] transition hover:text-[#F0D6A7]">
+                  Compare theory and reality <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </button>
+              </div>
+            </article>
           </div>
+        </section>
 
-          <div className="pt-6 mt-6 border-t border-stone-200/70 dark:border-stone-800 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-            <button
-              onClick={() => {
-                soundscapes.playPageTurn();
-                onSelectBook('book2', 'b2-ch1');
-              }}
-              className="px-6 py-3 rounded-xl bg-sky-900 text-white dark:bg-sky-100 dark:text-sky-950 text-base font-medium hover:bg-sky-800 dark:hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[48px]"
-            >
-              <BookOpen className="w-5 h-5" />
-              <span>Read Novella (Ch. 1)</span>
-            </button>
-
-            <button
-              onClick={() => {
-                soundscapes.playPageTurn();
-                onSelectBook('book2', 'b2-foreword');
-              }}
-              className="text-sm text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors flex items-center justify-center gap-1.5 font-medium min-h-[44px]"
-            >
-              <span>Foreword by Tasha Green</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Featured Banner: Theory vs. Reality Comparative Reading */}
-      <div className="relative rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-900 text-stone-100">
-        <div className="absolute inset-0 z-0 opacity-40">
-          <img
-            src="/src/assets/images/la_paloma_amber_interior_1793988829547.jpg"
-            alt="La Paloma Amber Interior"
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/80 to-transparent" />
-        </div>
-
-        <div className="relative z-10 p-8 sm:p-12 max-w-2xl space-y-4">
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-widest text-amber-400 font-sans font-semibold">
-            <Sparkles className="w-4 h-4" />
-            <span>Interactive Editorial Mode</span>
-          </div>
-
-          <h3 className="text-2xl sm:text-4xl font-display font-medium text-white tracking-tight leading-snug">
-            Theory vs. Reality: Synchronized Reading
-          </h3>
-
-          <p className="text-base sm:text-lg text-stone-200 font-reading-serif leading-relaxed">
-            Witness the structural dialogue between both texts side-by-side: each instructional law of the Blanco Code mapped directly against the moment it was tested, strained, or broken in the Atlanta case study.
-          </p>
-
-          <div className="pt-2">
-            <button
-              onClick={() => {
-                soundscapes.playPageTurn();
-                onOpenComparative();
-              }}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-medium text-base transition-colors flex items-center justify-center gap-2 shadow-md min-h-[48px]"
-            >
-              <span>Launch Parallel Theory & Case Study Reader</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Interactive Companions Ribbon */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">
-          <h4 className="text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-sans font-semibold">
-            Interactive Companion Modules & Analysis
-          </h4>
-          <span className="text-xs text-stone-400 dark:text-stone-500">4 Tools Available</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Module 1: The Blanco Code */}
-          <button
-            onClick={() => {
-              soundscapes.playPageTurn();
-              onOpenCompanion('code');
-            }}
-            className="text-left p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-amber-700/60 dark:hover:border-amber-400/60 transition-all space-y-2.5 group shadow-xs min-h-[160px]"
-          >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center">
-              <Compass className="w-5 h-5" />
-            </div>
-            <h5 className="font-display font-semibold text-stone-900 dark:text-stone-100 text-lg group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
-              The 7 Non-Negotiables
-            </h5>
-            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed font-sans">
-              Inspect all 7 laws with operational mechanics, failure points, and Tasha’s reality checks.
-            </p>
-          </button>
-
-          {/* Module 2: Fantasy Accounting */}
-          <button
-            onClick={() => {
-              soundscapes.playPageTurn();
-              onOpenCompanion('accounting');
-            }}
-            className="text-left p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-amber-700/60 dark:hover:border-amber-400/60 transition-all space-y-2.5 group shadow-xs min-h-[160px]"
-          >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center">
-              <Scale className="w-5 h-5" />
-            </div>
-            <h5 className="font-display font-semibold text-stone-900 dark:text-stone-100 text-lg group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
-              Fantasy Accounting Simulator
-            </h5>
-            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed font-sans">
-              Audit Sancho’s zero-liability assets against Daniel’s heavy domestic mortgage ledger.
-            </p>
-          </button>
-
-          {/* Module 3: Protocol Field Test */}
-          <button
-            onClick={() => {
-              soundscapes.playPageTurn();
-              onOpenCompanion('test');
-            }}
-            className="text-left p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-amber-700/60 dark:hover:border-amber-400/60 transition-all space-y-2.5 group shadow-xs min-h-[160px]"
-          >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <h5 className="font-display font-semibold text-stone-900 dark:text-stone-100 text-lg group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors">
-              Protocol Field Test
-            </h5>
-            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed font-sans">
-              Interactive dilemmas: test what you would do during the Burnt Sauce and Marquee Squall.
-            </p>
-          </button>
-
-          {/* Module 4: Pathology Dossier */}
-          <button
-            onClick={() => {
-              soundscapes.playPageTurn();
-              onOpenCompanion('dossier');
-            }}
-            className="text-left p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-amber-700/60 dark:hover:border-amber-400/60 transition-all space-y-2.5 group shadow-xs min-h-[160px]"
-          >
-            <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 flex items-center justify-center">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <h5 className="font-display font-semibold text-stone-900 dark:text-stone-100 text-lg group-hover:text-sky-800 dark:group-hover:text-sky-400 transition-colors">
-              Comparative Pathology Dossier
-            </h5>
-            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed font-sans">
-              Compare Sancho (Specialized Parasite) vs. Rico Royale (Invasive Corporate Raider).
-            </p>
-          </button>
-        </div>
+        <section className="mt-20 rounded-2xl border border-[#6B533A]/60 bg-[#211A16] px-6 py-10 text-center sm:px-12">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#B9935D]">A final word from your host</p>
+          <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl italic leading-tight text-[#E8D7BD] sm:text-4xl">“The King has the throne. The Queen has the vote. And you, caballero, have an eight o'clock reservation.”</h2>
+          <p className="mt-4 text-xs uppercase tracking-[0.18em] text-[#8E7B66]">Be a delightful guest. Not a permanent fixture.</p>
+        </section>
       </div>
     </div>
   );
