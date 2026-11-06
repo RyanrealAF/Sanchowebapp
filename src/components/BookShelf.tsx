@@ -110,7 +110,7 @@ export const BookShelf: React.FC<BookShelfProps> = ({
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The narrative case study</p>
                 <h3 className="mt-2 font-display text-2xl text-[#F0E4D2]">The Novella</h3>
                 <p className="mt-3 flex-1 text-sm leading-7 text-[#BDAF9D]">Ten chapters of fictionalized Atlanta relationship warfare. Meet Daniel Mercer, Elena Mercer, and Rico Royale, then watch the principles collide with real consequences.</p>
-                <button onClick={() => onSelectBook('book2', 'b2-prologue')} className="mt-6 flex min-h-11 items-center justify-between border-t border-[#604A35] pt-4 text-sm font-semibold text-[#D7B77E] transition hover:text-[#F0D6A7]">
+                <button onClick={() => onSelectBook('book2', 'b2-ch1')} className="mt-6 flex min-h-11 items-center justify-between border-t border-[#604A35] pt-4 text-sm font-semibold text-[#D7B77E] transition hover:text-[#F0D6A7]">
                   Enter the story <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </button>
               </div>
