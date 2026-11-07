@@ -124,20 +124,6 @@ export const BookShelf: React.FC<BookShelfProps> = ({
                 <img src={`${import.meta.env.BASE_URL}comparative-desk.webp`} alt="Two books open on a candlelit desk" className="h-full w-full object-cover opacity-75 transition duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#171311]/80 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-4 rounded-full border border-[#A88452]/60 bg-[#1A1410]/85 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Theory meets reality</div>
-                <div className="hidden">
-                  <div className="rounded-lg border border-[#A88452]/60 bg-[#3B2B20] p-4 shadow-xl">
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-[#D7B77E]">Theory</p>
-                    <div className="mt-4 h-1 w-4/5 rounded bg-[#C4A16C]/70" />
-                    <div className="mt-2 h-1 w-full rounded bg-[#C4A16C]/30" />
-                    <div className="mt-2 h-1 w-3/5 rounded bg-[#C4A16C]/30" />
-                  </div>
-                  <div className="mt-5 rounded-lg border border-[#A88452]/60 bg-[#292C29] p-4 shadow-xl">
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-[#B6C2AE]">Reality</p>
-                    <div className="mt-4 h-1 w-4/5 rounded bg-[#B6C2AE]/70" />
-                    <div className="mt-2 h-1 w-full rounded bg-[#B6C2AE]/30" />
-                    <div className="mt-2 h-1 w-3/5 rounded bg-[#B6C2AE]/30" />
-                  </div>
-                </div>
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The connection</p>
