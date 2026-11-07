@@ -16,7 +16,10 @@ export const BookShelf: React.FC<BookShelfProps> = ({
 
   return (
     <div className="relative isolate overflow-hidden bg-[#171311] text-[#F1E7D8]">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_0%,rgba(143,91,48,0.24),transparent_55%),linear-gradient(180deg,#211914_0%,#171311_55%,#171311_100%)]" />
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <img src={`${import.meta.env.BASE_URL}sancho-hero.webp`} alt="" className="h-[680px] w-full object-cover object-[center_28%] opacity-35" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(23,19,17,0.98)_0%,rgba(23,19,17,0.82)_48%,rgba(23,19,17,0.5)_100%),linear-gradient(180deg,rgba(23,19,17,0.1)_0%,#171311_680px)]" />
+      </div>
       <div className="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 sm:pt-20">
         <section className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div className="space-y-7">
@@ -117,8 +120,11 @@ export const BookShelf: React.FC<BookShelfProps> = ({
             </article>
 
             <article className="group flex flex-col overflow-hidden rounded-xl border border-[#80613F]/70 bg-[linear-gradient(145deg,#30241C,#211A16_65%)] transition duration-300 hover:-translate-y-1 hover:border-[#D0AC72]">
-              <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden border-b border-[#604A35] bg-[radial-gradient(circle_at_center,rgba(185,147,93,0.2),transparent_65%),#211A16]">
-                <div className="grid w-4/5 grid-cols-2 gap-2">
+              <div className="relative aspect-[16/9] overflow-hidden border-b border-[#604A35] bg-[#211A16]">
+                <img src={`${import.meta.env.BASE_URL}comparative-desk.webp`} alt="Two books open on a candlelit desk" className="h-full w-full object-cover opacity-75 transition duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#171311]/80 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-4 rounded-full border border-[#A88452]/60 bg-[#1A1410]/85 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Theory meets reality</div>
+                <div className="hidden">
                   <div className="rounded-lg border border-[#A88452]/60 bg-[#3B2B20] p-4 shadow-xl">
                     <p className="text-[9px] uppercase tracking-[0.18em] text-[#D7B77E]">Theory</p>
                     <div className="mt-4 h-1 w-4/5 rounded bg-[#C4A16C]/70" />
@@ -132,7 +138,6 @@ export const BookShelf: React.FC<BookShelfProps> = ({
                     <div className="mt-2 h-1 w-3/5 rounded bg-[#B6C2AE]/30" />
                   </div>
                 </div>
-                <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-[#A88452]/50 bg-[#1A1410]/90 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#E2C48F]">Interactive feature</span>
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#B9935D]">The connection</p>
@@ -147,6 +152,7 @@ export const BookShelf: React.FC<BookShelfProps> = ({
         </section>
 
         <section className="mt-20 rounded-2xl border border-[#6B533A]/60 bg-[#211A16] px-6 py-10 text-center sm:px-12">
+          <img src={`${import.meta.env.BASE_URL}sancho-portrait.webp`} alt="Portrait of Sancho Blanco" className="mx-auto mb-6 h-28 w-28 rounded-full border-2 border-[#B9935D]/70 object-cover shadow-xl" />
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#B9935D]">A final word from your host</p>
           <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl italic leading-tight text-[#E8D7BD] sm:text-4xl">“The King has the throne. The Queen has the vote. And you, caballero, have an eight o'clock reservation.”</h2>
           <p className="mt-4 text-xs uppercase tracking-[0.18em] text-[#8E7B66]">Be a delightful guest. Not a permanent fixture.</p>
