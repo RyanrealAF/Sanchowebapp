@@ -25,7 +25,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   <header className="sticky top-0 z-40 border-b border-[#5B4937]/60 bg-[#171311]/95 text-[#EDE2D0] backdrop-blur-xl">
     <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 py-3">
       <button onClick={() => onTabChange('shelf')} className="group flex min-w-0 items-center gap-3 text-left">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#B9935D]/60 bg-[#38291F] font-display text-lg font-bold text-[#D9B77D]">S</span>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#B9935D]/70 bg-[#211810]"><img src={`${import.meta.env.BASE_URL}sancho-emblem.webp`} alt="" className="h-full w-full object-contain p-0.5" /></span>
         <span className="min-w-0">
           <span className="block truncate font-display text-lg font-semibold tracking-wide text-[#E9D8BD] sm:text-xl">SANCHO BLANCO</span>
           <span className="hidden text-[9px] uppercase tracking-[0.2em] text-[#A68C6B] sm:block">The art of being the perfect other guy</span>
