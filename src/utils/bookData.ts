@@ -1,5 +1,3 @@
-import manualCover from '../assets/images/book_cover_satirical_guide_1793988828541.jpg';
-import novellaCover from '../assets/images/book_cover_legend_novella_1793988830220.jpg';
 
 export interface ChapterSection {
   type: 'law' | 'lecture' | 'case-study' | 'reality-check' | 'rule' | 'text' | 'quote' | 'foreword' | 'epilogue';
@@ -53,7 +51,7 @@ export const BOOKS_INFO: Record<'book1' | 'book2', BookInfo> = {
     shortTitle: 'The Satirical Manual',
     subtitle: "An Unauthorized Manual for Protecting the King's Ego, Preserving the Marriage, and Keeping Your Damn Name Out of the Family Group Chat",
     author: 'Señor Sancho Blanco',
-    coverImage: manualCover,
+    coverImage: `${import.meta.env.BASE_URL}manual-cover.webp`,
     totalChapters: 25,
     approxWords: 38000,
     description: 'The complete 23-chapter satirical handbook laying out the Blanco Code, Boutique Tourism, the Fragile Ego Protection Program, and Fantasy Accounting.',
@@ -69,7 +67,7 @@ export const BOOKS_INFO: Record<'book1' | 'book2', BookInfo> = {
     shortTitle: 'The Narrative Novella',
     subtitle: 'A Tale of High Protocol, Low Intentions, and the Battle for the Table at La Paloma',
     author: 'Señor Sancho Blanco (with Foreword by Tasha Green)',
-    coverImage: novellaCover,
+    coverImage: `${import.meta.env.BASE_URL}novella-scene.webp`,
     totalChapters: 14,
     approxWords: 12000,
     description: 'The 10-chapter narrative case study putting the Blanco Code into collision with real-life Atlanta friction, Daniel Mercer, Elena Mercer, and Rico Royale.',
